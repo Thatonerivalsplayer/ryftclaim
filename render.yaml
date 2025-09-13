@@ -1,0 +1,36 @@
+services:
+  - type: web
+    name: ryft-stock-bot
+    env: node
+    region: oregon
+    plan: free
+    buildCommand: npm ci && npm run build
+    startCommand: npm start
+    healthCheckPath: /
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5000
+      - key: DISCORD_BOT_TOKEN
+        sync: false
+      - key: DISCORD_GUILD_ID
+        sync: false
+      - key: SELLAUTH_API_KEY
+        sync: false
+      - key: SELLAUTH_SHOP_ID
+        sync: false
+      - key: DATABASE_URL
+        sync: false
+    buildFilter:
+      paths:
+        - client/**
+        - server/**
+        - shared/**
+        - package.json
+        - package-lock.json
+        - vite.config.ts
+        - tsconfig.json
+        - tailwind.config.ts
+        - drizzle.config.ts
+        - render.yaml
